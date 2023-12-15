@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 {
-    internal class CartaPoker : ICarta
+    internal class CartaBlackjack : ICarta
     {
         public FigurasCartasEnum Figura => throw new NotImplementedException();
 

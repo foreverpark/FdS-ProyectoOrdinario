@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 {
-    internal class JuegoPoker : IJuego
+    internal class JuegoBlackjack : IJuego
     {
         public IDealer Dealer => throw new NotImplementedException();
 
