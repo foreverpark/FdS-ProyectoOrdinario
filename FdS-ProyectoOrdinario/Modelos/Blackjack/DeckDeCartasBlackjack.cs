@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 {
-    internal class DeckDeCartasPoker : IDeckDeCartas
+    internal class DeckDeCartasBlackjack : IDeckDeCartas
     {
         public void BarajearDeck()
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 {
-    internal class JugadorPoker : IJugador
+    internal class JugadorBlackjack : IJugador
     {
         public ICarta DevolverCarta(int indiceCarta)
         {
