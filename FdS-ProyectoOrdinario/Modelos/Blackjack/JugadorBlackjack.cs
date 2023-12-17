@@ -78,7 +78,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
                     Console.WriteLine("Sus cartas son: \n");
                     foreach (var carta in ManoDelJugador)
                     {
-                        Console.Write($"{carta.Valor} de {carta.Figura}");
+                        Console.Write($"{carta.Valor} de {carta.Figura} \n");
                     }
                     break;
                 }

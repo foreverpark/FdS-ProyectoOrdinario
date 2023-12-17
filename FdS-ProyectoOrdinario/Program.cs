@@ -44,7 +44,10 @@ namespace FdS_ProyectoOrdinario
                         }
                         var Deck21BlacKJack = new DeckDeCartasBlackjack();
                         var DealerBlackJack = new DealerBlackjack(Deck21BlacKJack);
-                        var Dealer_Jugador = new JugadorBlackjack(DealerBlackJack);
+                        var Dealer_Jugador = new JugadorBlackjack(DealerBlackJack)
+                        {
+                            Nombre = "Dealer"
+                        };
                         var juegoBlackJack = new JuegoBlackjack(DealerBlackJack, Dealer_Jugador);
 
 

@@ -14,7 +14,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
         private List<IJugador> Jugadores;
         public IDealer Dealer { get; }
 
-        IJugador Dealer_Jugador;
+        IJugador Dealer_Jugador { get; }
 
         private IDeckDeCartas DeckDeCartas { get; }
 
@@ -85,7 +85,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
                 ganador = null;
             }
 
-            Console.WriteLine("El ganador es: " + (ganador != null ? "Jugador" : "Dealer"));
+            Console.WriteLine("El ganador es: " + (ganador != null ? ((JugadorBlackjack)ganador).Nombre : "Dealer"));
         }
 
         private int CalcularPuntuacion(List<ICarta> cartas)
