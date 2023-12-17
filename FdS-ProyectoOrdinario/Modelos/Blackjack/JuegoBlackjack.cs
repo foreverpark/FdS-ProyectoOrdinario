@@ -9,9 +9,19 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 {
     internal class JuegoBlackjack : IJuego
     {
-        public IDealer Dealer => throw new NotImplementedException();
 
-        public bool JuegoTerminado => throw new NotImplementedException();
+        private List<IJugador> Jugadores;
+        public IDealer Dealer { get; }
+
+        public bool JuegoTerminado { get; }
+
+        //Constructor
+        public JuegoBlackjack() 
+        {
+            Jugadores = new List<IJugador>();
+            Dealer=new DealerBlackjack(new DeckDeCartasBlackjack());
+            JuegoTerminado=false;
+        }
 
         public void AgregarJugador(IJugador jugador)
         {
