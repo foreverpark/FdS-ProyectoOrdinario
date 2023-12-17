@@ -1,4 +1,5 @@
-﻿using ProyectoOrdinario.Interfaces;
+﻿using ProyectoOrdinario.Enumeradores;
+using ProyectoOrdinario.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 {
     internal class DealerBlackjack : IDealer
     {
-
         IDeckDeCartas Deck;
         public void BarajearDeck()
         {
@@ -35,10 +35,10 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
             return cartasRepartidas;
         }
 
-        //Constructo
+        //Constructoe
         public DealerBlackjack(IDeckDeCartas deck)
         {
-            Deck= deck;
+            Deck = deck;
         }
 
 

@@ -11,7 +11,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
     internal class JugadorBlackjack : IJugador
     {
         //Creamos las propiedades
-        private static int ContadorJugadores = 1;
+        private static int ContadorJugadores = -1;
         private List<ICarta> ManoDelJugador;
         public string Nombre;
         private IDealer Dealer;
@@ -21,7 +21,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
         public JugadorBlackjack(IDealer dealer) 
         {
             ContadorJugadores ++;
-            Nombre = $"Jugardor {ContadorJugadores}";
+            Nombre = $"Jugador {ContadorJugadores}";
             ManoDelJugador = new List<ICarta>();
             Dealer = dealer;
         }
@@ -59,11 +59,11 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 
         public void RealizarJugada()
         {
-            Console.WriteLine($"Turno de {Nombre}\n");
+            Console.WriteLine($"\nTurno de {Nombre}\n");
             Console.WriteLine("Sus cartas son: ");
             foreach(var carta in ManoDelJugador) 
             {
-                Console.WriteLine($"{carta.Valor} de {carta.Figura}\n");
+                Console.WriteLine($"{carta.Valor} de {carta.Figura}");
             }
 
             Random ramdon = new Random();
@@ -74,11 +74,11 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 
                 if (puntuacion>21) 
                 {
-                    Console.WriteLine("Ya no puede pedir mas cartas\n");
+                    Console.WriteLine("Ya no puede pedir mas cartas llego a 21\n");
                     Console.WriteLine("Sus cartas son: \n");
                     foreach (var carta in ManoDelJugador)
                     {
-                        Console.Write($"{carta.Valor} de {carta.Figura}\n");
+                        Console.Write($"{carta.Valor} de {carta.Figura} \n");
                     }
                     break;
                 }
@@ -86,7 +86,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 
                 if (numeroAleatoria == 1) 
                 {
-                    Console.WriteLine($"{Nombre} decidio pedir otra carta\n");
+                    Console.WriteLine($"\n{Nombre} decidio pedir otra carta\n");
                     var nuevaCarta = Dealer.RepartirCartas(1).First();
                     ObtenerCartas(new List<ICarta> { nuevaCarta });
                     Console.WriteLine($"Carta nueva: {nuevaCarta.Valor} de {nuevaCarta.Figura}\n");

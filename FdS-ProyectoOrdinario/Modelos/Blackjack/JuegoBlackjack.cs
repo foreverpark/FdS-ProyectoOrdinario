@@ -1,4 +1,5 @@
-﻿using ProyectoOrdinario.Interfaces;
+﻿using ProyectoOrdinario.Enumeradores;
+using ProyectoOrdinario.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +14,18 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
         private List<IJugador> Jugadores;
         public IDealer Dealer { get; }
 
+        IJugador Dealer_Jugador { get; }
+
+        private IDeckDeCartas DeckDeCartas { get; }
+
         public bool JuegoTerminado { get; }
 
-        //Constructor
-        public JuegoBlackjack() 
+        public JuegoBlackjack(IDealer dealer, IJugador dealer_Jugador)
         {
             Jugadores = new List<IJugador>();
-            Dealer=new DealerBlackjack(new DeckDeCartasBlackjack());
-            JuegoTerminado=false;
+            Dealer = dealer;
+            Dealer_Jugador = dealer_Jugador;
+            JuegoTerminado = false;
         }
 
         public void AgregarJugador(IJugador jugador)
@@ -31,21 +36,92 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
         public void IniciarJuego()
         {
             Dealer.BarajearDeck();
-            
-            foreach(var  jugador in Jugadores) 
+
+            foreach (var jugador in Jugadores)
             {
                 jugador.ObtenerCartas(Dealer.RepartirCartas(2));
             }
+
+            Dealer_Jugador.ObtenerCartas(Dealer.RepartirCartas(2));
         }
 
         public void JugarRonda()
         {
-            throw new NotImplementedException();
+            foreach (var jugador in Jugadores)
+            {
+                jugador.RealizarJugada();
+                Console.ReadKey();
+                Console.Clear();
+            }
+
+            Dealer_Jugador.RealizarJugada();
+            MostrarGanador();
+            Console.ReadKey();
+            Console.Clear();
+
         }
 
         public void MostrarGanador()
         {
-            throw new NotImplementedException();
+            IJugador ganador = null;
+
+            int puntuacionDeGanador = 0;
+
+            foreach (var jugador in Jugadores)
+            {
+                int puntuacionJugador = CalcularPuntuacion(jugador.MostrarCartas());
+
+                if (puntuacionJugador <= 21 && puntuacionJugador > puntuacionDeGanador)
+                {
+                    ganador = jugador;
+                    puntuacionDeGanador = puntuacionJugador;
+                }
+            }
+
+            int puntuacionDealer = CalcularPuntuacion(Dealer_Jugador.MostrarCartas());
+
+            if (puntuacionDealer <= 21 && puntuacionDealer > puntuacionDeGanador)
+            {
+                ganador = null;
+            }
+
+            Console.WriteLine("El ganador es: " + (ganador != null ? ((JugadorBlackjack)ganador).Nombre : "Dealer"));
+        }
+
+        private int CalcularPuntuacion(List<ICarta> cartas)
+        {
+            int puntuacion = 0;
+            int ases = 0;
+
+            foreach (var carta in cartas)
+            {
+                if (carta.Valor == ValoresCartasEnum.As)
+                {
+                    ases++;
+                    puntuacion += 11; //al inicio el as vale 11
+                }
+                else if (carta.Valor >= ValoresCartasEnum.Diez && carta.Valor <= ValoresCartasEnum.Rey)
+                {
+                    puntuacion += 10;
+                }
+                else
+                {
+                    puntuacion += (int)carta.Valor;
+                }
+
+
+            }
+
+            //el valor del as cambia si supera el 21
+            while (ases > 0 && puntuacion > 21)
+            {
+                puntuacion -= 10;
+                ases--;
+            }
+
+            return puntuacion;
+
+
         }
     }
 }
