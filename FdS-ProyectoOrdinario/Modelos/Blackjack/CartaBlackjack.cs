@@ -8,10 +8,15 @@ using System.Threading.Tasks;
 
 namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 {
-    internal class CartaBlackjack : ICarta
+    internal class CartaBlackJack : ICarta
     {
-        public FigurasCartasEnum Figura => throw new NotImplementedException();
+        public FigurasCartasEnum Figura { get; }
 
-        public ValoresCartasEnum Valor => throw new NotImplementedException();
+        public ValoresCartasEnum Valor { get; }
+        public CartaBlackJack(FigurasCartasEnum figura, ValoresCartasEnum valor)
+        {
+            Figura = figura;
+            Valor = valor;
+        }
     }
 }
