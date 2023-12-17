@@ -50,10 +50,14 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
             foreach (var jugador in Jugadores)
             {
                 jugador.RealizarJugada();
+                Console.ReadKey();
+                Console.Clear();
             }
 
             Dealer_Jugador.RealizarJugada();
             MostrarGanador();
+            Console.ReadKey();
+            Console.Clear();
 
         }
 

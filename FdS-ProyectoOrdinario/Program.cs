@@ -33,7 +33,8 @@ namespace FdS_ProyectoOrdinario
                             NumeroJugadores = int.Parse(Console.ReadLine());
 
                             if(NumeroJugadores > 0 && NumeroJugadores < 8)
-                            { 
+                            {
+                                Console.Clear();
                                 break;
                             }
                             else 

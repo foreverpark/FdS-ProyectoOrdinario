@@ -11,7 +11,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
     internal class JugadorBlackjack : IJugador
     {
         //Creamos las propiedades
-        private static int ContadorJugadores = 1;
+        private static int ContadorJugadores = 0;
         private List<ICarta> ManoDelJugador;
         public string Nombre;
         private IDealer Dealer;
@@ -21,7 +21,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
         public JugadorBlackjack(IDealer dealer) 
         {
             ContadorJugadores ++;
-            Nombre = $"Jugardor {ContadorJugadores}";
+            Nombre = $"Jugador {ContadorJugadores}";
             ManoDelJugador = new List<ICarta>();
             Dealer = dealer;
         }
@@ -74,7 +74,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 
                 if (puntuacion>21) 
                 {
-                    Console.WriteLine("Ya no puede pedir mas cartas\n");
+                    Console.WriteLine("Ya no puede pedir mas cartas llego a 21\n");
                     Console.WriteLine("Sus cartas son: \n");
                     foreach (var carta in ManoDelJugador)
                     {
