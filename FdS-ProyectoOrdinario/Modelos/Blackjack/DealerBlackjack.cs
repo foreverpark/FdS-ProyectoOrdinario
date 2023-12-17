@@ -9,19 +9,38 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 {
     internal class DealerBlackjack : IDealer
     {
+
+        IDeckDeCartas Deck;
         public void BarajearDeck()
         {
-            throw new NotImplementedException();
+            Deck.BarajearDeck();
         }
 
         public void RecogerCartas(List<ICarta> cartas)
         {
-            throw new NotImplementedException();
+            Deck.MeterCarta(cartas);
         }
 
         public List<ICarta> RepartirCartas(int numeroDeCartas)
         {
-            throw new NotImplementedException();
+            var cartasRepartidas=new List<ICarta>();
+
+            for (int i = 0; i < numeroDeCartas; i++) 
+            {
+                ICarta carta = Deck.SacarCarta(0);
+                cartasRepartidas.Add(carta);
+            
+            }
+
+            return cartasRepartidas;
         }
+
+        //Constructo
+        public DealerBlackjack(IDeckDeCartas deck)
+        {
+            Deck= deck;
+        }
+
+
     }
 }
