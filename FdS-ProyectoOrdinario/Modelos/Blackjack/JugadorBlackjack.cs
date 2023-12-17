@@ -11,7 +11,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
     internal class JugadorBlackjack : IJugador
     {
         //Creamos las propiedades
-        private static int ContadorJugadores = 0;
+        private static int ContadorJugadores = -1;
         private List<ICarta> ManoDelJugador;
         public string Nombre;
         private IDealer Dealer;
