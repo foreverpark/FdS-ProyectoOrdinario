@@ -25,12 +25,17 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 
         public void AgregarJugador(IJugador jugador)
         {
-            throw new NotImplementedException();
+            Jugadores.Add(jugador);
         }
 
         public void IniciarJuego()
         {
-            throw new NotImplementedException();
+            Dealer.BarajearDeck();
+            
+            foreach(var  jugador in Jugadores) 
+            {
+                jugador.ObtenerCartas(Dealer.RepartirCartas(2));
+            }
         }
 
         public void JugarRonda()
