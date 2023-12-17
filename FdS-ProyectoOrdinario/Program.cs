@@ -89,10 +89,5 @@ namespace FdS_ProyectoOrdinario
             Figura = figura;
             Valor = valor;  
         }
-
-        public void MostrarCarta()
-        {
-            Console.WriteLine($"{Valor} de {Figura}");
-        }
     }
 }
