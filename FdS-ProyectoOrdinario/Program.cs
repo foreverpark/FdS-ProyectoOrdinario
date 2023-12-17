@@ -1,38 +1,45 @@
-﻿namespace FdS_ProyectoOrdinario
+﻿using ProyectoOrdinario.Interfaces;
+using ProyectoOrdinario.Enumeradores;
+
+namespace FdS_ProyectoOrdinario
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Adios Anderson");
+            Deck deck = new Deck();
+
+            var carta = deck.SacarCarta(0);
+
+            Console.WriteLine($"{carta.Valor} de {carta.Figura}"); 
         }
     }
 
-    public class Deck
+    public class Deck: IDeckDeCartas
     {
-        List<Carta_BlackJack> cartas;
+        List<ICarta> cartas;
 
         public Deck()
         {
             CrearDeck();
-            MezclarDeck();
+            BarajearDeck();
         }
 
-        private void CrearDeck()
+        public void CrearDeck()
         {
-            cartas = new List<Carta_BlackJack>();
+            cartas = new List<ICarta>();
 
             //se hace un foreach a los enumeradores para asignarlos a una carta y este sea añadido a una lista de cartas(deck)
-            foreach (Carta_BlackJack.FigurasEnum figuras in Enum.GetValues(typeof(Carta_BlackJack.FigurasEnum)))
+            foreach (FigurasCartasEnum figuras in Enum.GetValues(typeof(FigurasCartasEnum)))
             {
-                foreach (Carta_BlackJack.ValoresEnum valores in Enum.GetValues(typeof(Carta_BlackJack.ValoresEnum)))
+                foreach (ValoresCartasEnum valores in Enum.GetValues(typeof(ValoresCartasEnum)))
                 {
                     cartas.Add(new Carta_BlackJack(figuras, valores));
                 }
             }
         }
 
-        private void MezclarDeck()
+        public void BarajearDeck()
         {
             Random random = new Random();
             int numeroDeCartas = cartas.Count;
@@ -41,7 +48,7 @@
                 numeroDeCartas--;
 
                 int numeroRandom = random.Next(numeroDeCartas + 1);
-                Carta_BlackJack carta = cartas[numeroRandom];
+                ICarta carta = cartas[numeroRandom];
 
                 cartas[numeroRandom] = cartas[numeroDeCartas];
 
@@ -49,47 +56,38 @@
             }
         }
 
-        public Carta_BlackJack RepartirCarta()
+        public ICarta VerCarta(int indiceCarta)
         {
-            Carta_BlackJack carta = cartas[0];
-            cartas.RemoveAt(0);
+            return cartas[indiceCarta];
+        }
+
+        public ICarta SacarCarta(int indiceCarta)
+        {
+            ICarta carta = cartas[indiceCarta];
+            cartas.RemoveAt(indiceCarta);
             return carta;
         }
 
-    }
-    public class Carta_BlackJack
-    {
-        public FigurasEnum Figura { get; }
+        public void MeterCarta(ICarta carta)
+        {
+            cartas.Add(carta);
+        }
 
-        public ValoresEnum Valor { get; }
-        public Carta_BlackJack(FigurasEnum figura, ValoresEnum valor)
+        public void MeterCarta(List<ICarta> Cartas)
+        {
+            cartas.AddRange(Cartas);
+        }
+
+    }
+    public class Carta_BlackJack: ICarta
+    {
+        public FigurasCartasEnum Figura { get; }
+
+        public ValoresCartasEnum Valor { get; }
+        public Carta_BlackJack(FigurasCartasEnum figura, ValoresCartasEnum valor)
         {
             Figura = figura;
             Valor = valor;  
-        }
-
-        public enum FigurasEnum
-        {
-            Corazones,
-            Diamantes,
-            Treboles,
-            Picas
-        }
-        public enum ValoresEnum
-        {
-            As = 1,
-            Dos = 2,
-            Tres = 3,
-            Cuatro = 4,
-            Cinco = 5,
-            Seis = 6,
-            Siete = 7,
-            Ocho = 8,
-            Nueve = 9,
-            Diez = 10,
-            Jota = 11,
-            Reina = 12,
-            Rey = 13,
         }
 
         public void MostrarCarta()
