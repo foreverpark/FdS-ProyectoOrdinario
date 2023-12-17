@@ -12,18 +12,19 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
     {
 
         private List<IJugador> Jugadores;
+        public IDealer Dealer { get; }
 
         IJugador Dealer_Jugador;
-        public IDealer Dealer { get; }
 
         private IDeckDeCartas DeckDeCartas { get; }
 
         public bool JuegoTerminado { get; }
 
-        public JuegoBlackjack(IDealer dealer)
+        public JuegoBlackjack(IDealer dealer, IJugador dealer_Jugador)
         {
             Jugadores = new List<IJugador>();
             Dealer = dealer;
+            Dealer_Jugador = dealer_Jugador;
             JuegoTerminado = false;
         }
 
@@ -40,6 +41,8 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
             {
                 jugador.ObtenerCartas(Dealer.RepartirCartas(2));
             }
+
+            Dealer_Jugador.ObtenerCartas(Dealer.RepartirCartas(2));
         }
 
         public void JugarRonda()
