@@ -16,10 +16,10 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
         public bool JuegoTerminado { get; }
 
         //Constructor
-        public JuegoBlackjack() 
+        public JuegoBlackjack(IDealer dealer) 
         {
             Jugadores = new List<IJugador>();
-            Dealer=new DealerBlackjack(new DeckDeCartasBlackjack());
+            Dealer = dealer;
             JuegoTerminado=false;
         }
 

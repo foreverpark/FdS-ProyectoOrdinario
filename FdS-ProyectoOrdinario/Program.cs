@@ -42,11 +42,17 @@ namespace FdS_ProyectoOrdinario
                             }
                         }
 
-                        var juegoBlackJack = new JuegoBlackjack();
+                        var Deck21BlacKJack=new DeckDeCartasBlackjack();
+                        var DealerBlackJack=new DealerBlackjack(Deck21BlacKJack);
+                        var juegoBlackJack = new JuegoBlackjack(DealerBlackJack);
 
-
-
-
+                        for (int i = 0; i < NumeroJugadores; i++) 
+                        {
+                            juegoBlackJack.AgregarJugador(new JugadorBlackjack(DealerBlackJack));
+                        }
+                        juegoBlackJack.IniciarJuego();
+                        juegoBlackJack.JugarRonda();
+                        juegoBlackJack.MostrarGanador();
                         break;
                     }
 
