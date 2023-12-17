@@ -7,11 +7,7 @@ namespace FdS_ProyectoOrdinario
     {
         static void Main(string[] args)
         {
-            Deck deck = new Deck();
-
-            var carta = deck.SacarCarta(0);
-
-            Console.WriteLine($"{carta.Valor} de {carta.Figura}"); 
+            
         }
     }
 
