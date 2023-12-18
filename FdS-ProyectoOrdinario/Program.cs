@@ -55,7 +55,6 @@ namespace FdS_ProyectoOrdinario
                         {
                             juegoBlackJack.AgregarJugador(new JugadorBlackjack(DealerBlackJack));
                         }
-                        juegoBlackJack.AgregarJugador(Dealer_Jugador);
 
                         juegoBlackJack.IniciarJuego();
                         juegoBlackJack.JugarRonda();
