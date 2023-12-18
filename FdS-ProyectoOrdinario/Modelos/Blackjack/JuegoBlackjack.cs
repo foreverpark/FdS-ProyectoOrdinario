@@ -70,7 +70,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
             {
                 int puntuacionJugador = CalcularPuntuacion(jugador.MostrarCartas());
 
-                if(puntuacionJugador>=21 && puntuacionDealer > 21) 
+                if(puntuacionJugador<=21 && puntuacionDealer > 21) 
                 {
                     JugadoresGanadores.Add(jugador);
 
