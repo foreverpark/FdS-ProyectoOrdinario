@@ -123,13 +123,20 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
             foreach(var carta in ManoDelJugador) 
             {
 
-                puntuacion += (int)carta.Valor;
-
-                if(carta.Valor == ValoresCartasEnum.As) 
+                if (carta.Valor == ValoresCartasEnum.As)
                 {
                     NumeroDeAses++;
-                
+                    puntuacion += 11;
                 }
+                else if (carta.Valor >= ValoresCartasEnum.Diez && carta.Valor <= ValoresCartasEnum.Rey)
+                {
+                    puntuacion += 10;
+                }
+                else
+                {
+                    puntuacion += (int)carta.Valor;
+                }
+
             }
 
             while(puntuacion>21 && NumeroDeAses > 0) 
