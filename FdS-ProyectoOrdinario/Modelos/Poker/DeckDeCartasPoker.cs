@@ -5,12 +5,12 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
     internal class DeckDeCartasPoker : IDeckDeCartas
     {
        
-        public List<ICarta> Cartas;
+        public List<CartaPoker> Cartas;
 
         
         public DeckDeCartasPoker()
         {
-            Cartas = new List<ICarta>();
+            Cartas = new List<CartaPoker>();
         }
 
         
@@ -23,7 +23,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
                 cartasPorBarajear--;
 
                 int numeroAleatorio = instanciaRandom.Next(cartasPorBarajear + 1);
-                ICarta carta = Cartas[numeroAleatorio];
+                CartaPoker carta = Cartas[numeroAleatorio];
 
                 Cartas[numeroAleatorio] = Cartas[cartasPorBarajear];
 
@@ -33,17 +33,17 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
 
         public void MeterCarta(ICarta carta)
         {
-            Cartas.Add(carta);
+            Cartas.Add((CartaPoker)carta);
         }
 
         public void MeterCarta(List<ICarta> cartas)
         {
-            Cartas.AddRange(cartas);
+            Cartas.AddRange((IEnumerable<CartaPoker>)cartas);
         }
 
         public ICarta SacarCarta(int indiceCarta)
         {
-            ICarta cartaSacada = Cartas[indiceCarta];
+            CartaPoker cartaSacada = Cartas[indiceCarta];
             Cartas.RemoveAt(indiceCarta);
             return cartaSacada;
         }
