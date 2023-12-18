@@ -18,8 +18,8 @@ namespace ProyectoOrdinario.Enumeradores
         Ocho,
         Nueve,
         Diez,
-        Jota,
-        Reina,
-        Rey
+        Jota=10,
+        Reina=10,
+        Rey = 10
     }
 }

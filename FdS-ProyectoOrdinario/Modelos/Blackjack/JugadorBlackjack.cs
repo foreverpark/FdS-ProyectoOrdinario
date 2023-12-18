@@ -76,13 +76,14 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 
                 if (puntuacion>21) 
                 {
-                    Console.WriteLine("Ya no puede pedir mas cartas\n");
+                    Console.WriteLine("El puntuaje supero el 21 ya no puede pedir otra carta\n");
+                    Console.WriteLine($"Su puntaje es de {puntuacion}\n");
                     Console.WriteLine("Sus cartas son: \n");
                     foreach (var carta in ManoDelJugador)
                     {
                         Console.Write($"{carta.Valor} de {carta.Figura} \n");
                     }
-
+                    
                     break;
                 }
 
@@ -93,6 +94,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
                 if (descision<=probabilidadPedirCarta) 
                 {
                     Console.WriteLine($"\n{Nombre} decidio pedir otra carta\n");
+                    Console.WriteLine($"Su puntaje es de {puntuacion}\n");
                     var nuevaCarta = Dealer.RepartirCartas(1).First();
                     ObtenerCartas(new List<ICarta> { nuevaCarta });
                     Console.WriteLine($"Carta nueva: {nuevaCarta.Valor} de {nuevaCarta.Figura}\n");
@@ -100,6 +102,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
                 else
                 {
                     Console.WriteLine($"{Nombre} decidio no pedir otra carta\n");
+                    Console.WriteLine($"Su puntaje es de {puntuacion}\n");
                     Console.WriteLine("Sus cartas son: \n");
                     foreach (var carta in ManoDelJugador)
                     {
