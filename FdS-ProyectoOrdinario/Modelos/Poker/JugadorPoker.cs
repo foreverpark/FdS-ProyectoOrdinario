@@ -9,29 +9,46 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
 {
     internal class JugadorPoker : IJugador
     {
+        //Propiedades
+        public List<CartaPoker> Mano;
+
+        //Constructor
+        public JugadorPoker()
+        {
+            Mano = new List<CartaPoker>();
+        }
+
+        //Métodos
         public ICarta DevolverCarta(int indiceCarta)
         {
-            throw new NotImplementedException();
+            var CartaDevuelta = Mano[indiceCarta];
+            Mano.RemoveAt(indiceCarta);
+            return CartaDevuelta;
         }
 
         public List<ICarta> DevolverTodasLasCartas()
         {
-            throw new NotImplementedException();
+            List<ICarta> CartasDevueltas = new(Mano);
+            Mano.Clear();
+            return CartasDevueltas;
         }
 
         public ICarta MostrarCarta(int indiceCarta)
         {
-            throw new NotImplementedException();
+            return Mano[indiceCarta];
         }
 
         public List<ICarta> MostrarCartas()
         {
-            throw new NotImplementedException();
+            return new List<ICarta>(Mano);
         }
 
         public void ObtenerCartas(List<ICarta> cartas)
         {
-            throw new NotImplementedException();
+            foreach (var carta in cartas)
+            {
+                Mano.Add((CartaPoker)carta);
+            }
         }
 
         public void RealizarJugada()
