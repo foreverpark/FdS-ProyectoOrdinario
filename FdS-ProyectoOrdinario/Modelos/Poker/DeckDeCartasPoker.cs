@@ -1,4 +1,6 @@
-﻿using ProyectoOrdinario.Interfaces;
+﻿using FdS_ProyectoOrdinario.Modelos.Blackjack;
+using ProyectoOrdinario.Enumeradores;
+using ProyectoOrdinario.Interfaces;
 
 namespace FdS_ProyectoOrdinario.Modelos.Poker
 {
@@ -11,6 +13,14 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
         public DeckDeCartasPoker()
         {
             Cartas = new List<CartaPoker>();
+
+            foreach (FigurasCartasEnum figuras in Enum.GetValues(typeof(FigurasCartasEnum)))
+            {
+                foreach (ValoresCartasEnum valores in Enum.GetValues(typeof(ValoresCartasEnum)))
+                {
+                    Cartas.Add(new CartaPoker(figuras, valores));
+                }
+            }
         }
 
         
