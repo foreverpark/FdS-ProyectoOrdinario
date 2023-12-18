@@ -66,6 +66,8 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
                 Console.WriteLine($"{carta.Valor} de {carta.Figura}");
             }
 
+
+
             Random ramdon = new Random();
 
             while (true)
@@ -74,17 +76,21 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 
                 if (puntuacion>21) 
                 {
-                    Console.WriteLine("Ya no puede pedir mas cartas llego a 21\n");
+                    Console.WriteLine("Ya no puede pedir mas cartas\n");
                     Console.WriteLine("Sus cartas son: \n");
                     foreach (var carta in ManoDelJugador)
                     {
                         Console.Write($"{carta.Valor} de {carta.Figura} \n");
                     }
+
                     break;
                 }
-                int numeroAleatoria=ramdon.Next(1,3);
 
-                if (numeroAleatoria == 1) 
+
+                int probabilidadPedirCarta=Math.Max(0, 18-puntuacion);
+                int descision=ramdon.Next(1,3);
+
+                if (descision<=probabilidadPedirCarta) 
                 {
                     Console.WriteLine($"\n{Nombre} decidio pedir otra carta\n");
                     var nuevaCarta = Dealer.RepartirCartas(1).First();
