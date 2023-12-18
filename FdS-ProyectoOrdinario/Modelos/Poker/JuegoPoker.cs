@@ -17,6 +17,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
         public JuegoPoker()
         {
             Dealer = new DealerPoker();
+            Jugadores = new List<IJugador>();
         }
 
         
@@ -34,8 +35,24 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
                 jugador.ObtenerCartas(Dealer.RepartirCartas(5));
             }
 
+            int numeroJugador = 1;
+            foreach (var jugador in Jugadores)
+            {
+                Console.WriteLine($"Jugador {numeroJugador}:");
+                var Mano = jugador.MostrarCartas();
+                int numeroCarta = 1;
+                foreach (var carta in Mano)
+                {
+                    Console.WriteLine($"Carta {numeroCarta}: {carta.Valor} de {carta.Figura}");
+                    numeroCarta += 1;
+                }
+                numeroJugador += 1;
+                Console.WriteLine();
+            }
+            Console.ReadKey();
+            Console.Clear();
+
             JugarRonda();
-        
         }
 
         public void JugarRonda()
@@ -59,7 +76,11 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
                     numeroCarta += 1;
                 }
                 numeroJugador += 1;
+                Console.WriteLine();
             }
+
+            MostrarGanador();
+            Console.ReadKey();
         }
 
         public void MostrarGanador()
