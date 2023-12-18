@@ -9,23 +9,57 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
 {
     internal class JuegoPoker : IJuego
     {
-        public IDealer Dealer => throw new NotImplementedException();
+        private List<IJugador> Jugadores { get; }
+        public IDealer Dealer { get; }
 
-        public bool JuegoTerminado => throw new NotImplementedException();
+        public bool JuegoTerminado { get; } 
 
+        public JuegoPoker()
+        {
+            Dealer = new DealerPoker();
+        }
+
+        
         public void AgregarJugador(IJugador jugador)
         {
-            throw new NotImplementedException();
+            Jugadores.Add(jugador);
         }
 
         public void IniciarJuego()
         {
-            throw new NotImplementedException();
+            Dealer.BarajearDeck();
+
+            foreach (var jugador in Jugadores)
+            {
+                jugador.ObtenerCartas(Dealer.RepartirCartas(5));
+            }
+
+            JugarRonda();
+        
         }
 
         public void JugarRonda()
         {
-            throw new NotImplementedException();
+            foreach (var jugador in Jugadores)
+            {
+                jugador.RealizarJugada();
+                Console.ReadKey();
+                Console.Clear();
+            }
+
+            int numeroJugador = 1;
+            foreach (var jugador in Jugadores)
+            {
+                Console.WriteLine($"Jugador {numeroJugador}:");
+                var Mano = jugador.MostrarCartas();
+                int numeroCarta = 1;
+                foreach(var carta in Mano)
+                {
+                    Console.WriteLine($"Carta {numeroCarta}: {carta.Valor} de {carta.Figura}" );
+                    numeroCarta += 1;
+                }
+                numeroJugador += 1;
+            }
         }
 
         public void MostrarGanador()
