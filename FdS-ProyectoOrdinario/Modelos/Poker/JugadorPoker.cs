@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,12 +11,14 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
     internal class JugadorPoker : IJugador
     {
         //Propiedades
-        public List<CartaPoker> Mano;
+        public List<ICarta> Mano;
+        private IDealer Dealer;
 
         //Constructor
-        public JugadorPoker()
+        public JugadorPoker(IDealer dealer)
         {
-            Mano = new List<CartaPoker>();
+            Mano = new List<ICarta>();
+            Dealer = dealer;
         }
 
         //Métodos
@@ -47,13 +50,67 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
         {
             foreach (var carta in cartas)
             {
-                Mano.Add((CartaPoker)carta);
+                Mano.Add(carta);
             }
         }
 
         public void RealizarJugada()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            Random instanciaRandom = new();
+            if (instanciaRandom.Next(11) > 5)
+            {
+                List<ICarta> cartasParaDevolver = new List<ICarta>();
+                int numeroCartasDevueltas = 1;
+                var cartaElegida = MostrarCarta(instanciaRandom.Next(5));
+                cartasParaDevolver.Add(cartaElegida);
+                Mano.Remove(cartaElegida);
+                Console.WriteLine($"Regresa {cartaElegida.Valor} de {cartaElegida.Figura}");
+
+                if (instanciaRandom.Next(10) > 5)
+                {
+                    numeroCartasDevueltas++;
+                    cartaElegida = MostrarCarta(instanciaRandom.Next(4));
+                    cartasParaDevolver.Add(cartaElegida);
+                    Mano.Remove(cartaElegida);
+                    Console.WriteLine($"Regresa {cartaElegida.Valor} de {cartaElegida.Figura}");
+
+                    if (instanciaRandom.Next(9) > 5)
+                    {
+                        numeroCartasDevueltas++;
+                        cartaElegida = MostrarCarta(instanciaRandom.Next(3));
+                        cartasParaDevolver.Add(cartaElegida);
+                        Mano.Remove(cartaElegida);
+                        Console.WriteLine($"Regresa {cartaElegida.Valor} de {cartaElegida.Figura}");
+
+                        if (instanciaRandom.Next(8) > 5)
+                        {
+                            numeroCartasDevueltas++;
+                            cartaElegida = MostrarCarta(instanciaRandom.Next(2));
+                            cartasParaDevolver.Add(cartaElegida);
+                            Mano.Remove(cartaElegida);
+                            Console.WriteLine($"Regresa {cartaElegida.Valor} de {cartaElegida.Figura}");
+
+                            if (instanciaRandom.Next(7) > 5)
+                            {
+                                numeroCartasDevueltas++;
+                                cartaElegida = MostrarCarta(0);
+                                cartasParaDevolver.Add(cartaElegida);
+                                Mano.Remove(cartaElegida);
+                                Console.WriteLine($"Regresa {cartaElegida.Valor} de {cartaElegida.Figura}");
+                            }
+                        }
+
+                    }
+                }
+
+                Dealer.RecogerCartas(cartasParaDevolver);
+                ObtenerCartas(Dealer.RepartirCartas(numeroCartasDevueltas));
+            } else
+            {
+                Console.WriteLine("No regresa ninguna carta.");
+            }
+
         }
     }
 }

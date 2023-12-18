@@ -39,7 +39,7 @@ namespace FdS_ProyectoOrdinario
 
                         for (int i = 0; i < NumeroJugadores; i++)
                         {
-                            juegoPoker.AgregarJugador(new JugadorPoker());
+                            juegoPoker.AgregarJugador(new JugadorPoker(juegoPoker.Dealer));
                         }
 
                         juegoPoker.IniciarJuego();

@@ -57,14 +57,17 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
 
         public void JugarRonda()
         {
+            int numeroJugador = 1;
             foreach (var jugador in Jugadores)
             {
+                Console.WriteLine($"Turno del Jugador {numeroJugador}");
                 jugador.RealizarJugada();
                 Console.ReadKey();
                 Console.Clear();
+                numeroJugador++;
             }
 
-            int numeroJugador = 1;
+            numeroJugador = 1;
             foreach (var jugador in Jugadores)
             {
                 Console.WriteLine($"Jugador {numeroJugador}:");
