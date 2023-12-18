@@ -93,8 +93,8 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 
                 if (descision<=probabilidadPedirCarta) 
                 {
+                    Console.WriteLine($"\nSu puntaje es de {puntuacion}\n");
                     Console.WriteLine($"\n{Nombre} decidio pedir otra carta\n");
-                    Console.WriteLine($"Su puntaje es de {puntuacion}\n");
                     var nuevaCarta = Dealer.RepartirCartas(1).First();
                     ObtenerCartas(new List<ICarta> { nuevaCarta });
                     Console.WriteLine($"Carta nueva: {nuevaCarta.Valor} de {nuevaCarta.Figura}\n");
