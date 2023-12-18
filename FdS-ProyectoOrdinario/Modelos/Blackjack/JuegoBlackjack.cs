@@ -55,7 +55,6 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
             }
 
             Dealer_Jugador.RealizarJugada();
-            MostrarGanador();
             Console.ReadKey();
             Console.Clear();
 
@@ -63,29 +62,38 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 
         public void MostrarGanador()
         {
-            IJugador ganador = null;
+            List<IJugador> JugadoresGanadores = new List<IJugador>();
 
-            int puntuacionDeGanador = 0;
+            int puntuacionDealer = CalcularPuntuacion(Dealer_Jugador.MostrarCartas());
 
             foreach (var jugador in Jugadores)
             {
                 int puntuacionJugador = CalcularPuntuacion(jugador.MostrarCartas());
 
-                if (puntuacionJugador <= 21 && puntuacionJugador > puntuacionDeGanador)
+                if(puntuacionJugador>=21 && puntuacionDealer > 21) 
                 {
-                    ganador = jugador;
-                    puntuacionDeGanador = puntuacionJugador;
+                    JugadoresGanadores.Add(jugador);
+
+                }
+                else if (puntuacionJugador <= 21 &&puntuacionJugador>puntuacionDealer && puntuacionDealer<=21) 
+                {
+                  JugadoresGanadores.Add(jugador);
                 }
             }
 
-            int puntuacionDealer = CalcularPuntuacion(Dealer_Jugador.MostrarCartas());
-
-            if (puntuacionDealer <= 21 && puntuacionDealer > puntuacionDeGanador)
+            if(JugadoresGanadores.Count > 0)
             {
-                ganador = null;
+                Console.WriteLine("Los ganadores son :\n");
+                foreach (var ganador in JugadoresGanadores)
+                {
+                    Console.WriteLine(((JugadorBlackjack)ganador).Nombre);
+                }
             }
+            else
+            {
 
-            Console.WriteLine("El ganador es: " + (ganador != null ? ((JugadorBlackjack)ganador).Nombre : "Dealer"));
+                Console.WriteLine("El ganador es el dealer");       
+            }   
         }
 
         private int CalcularPuntuacion(List<ICarta> cartas)

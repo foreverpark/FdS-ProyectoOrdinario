@@ -18,8 +18,7 @@ namespace FdS_ProyectoOrdinario
                     {
                         Console.WriteLine("Estas jugando Poker Clásico :)");
                         break;
-                    
-                    
+                   
                     }
 
 
