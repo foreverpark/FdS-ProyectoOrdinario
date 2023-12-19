@@ -1,7 +1,6 @@
 ﻿using ProyectoOrdinario.Interfaces;
 using ProyectoOrdinario.Enumeradores;
 using FdS_ProyectoOrdinario.Modelos.Blackjack;
-using FdS_ProyectoOrdinario.Modelos.Poker;
 using System.ComponentModel;
 
 namespace FdS_ProyectoOrdinario
@@ -14,50 +13,15 @@ namespace FdS_ProyectoOrdinario
 
             bool falloIntento = true;
 
-            while (falloIntento==true) 
+            while (falloIntento == true)
             {
 
-                case 1: 
-                    {
-                        var juegoPoker = new JuegoPoker();
-                        Console.WriteLine("Estas jugando Poker Clásico :)");
-                        int NumeroJugadores = 0;
-                        Console.WriteLine("Ingrese el numero de Jugadores: ");
-                        while (true)
-                        {
-                            NumeroJugadores = int.Parse(Console.ReadLine());
-
-                            //validate number
-                            if (NumeroJugadores >= 2 && NumeroJugadores <= 9)
-                            {
-                                Console.Clear();
-                                break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("\nIngrese un numero entre 2 y 9");
-                            }
-                        }
-
-                        for (int i = 0; i < NumeroJugadores; i++)
-                        {
-                            juegoPoker.AgregarJugador(new JugadorPoker(juegoPoker.Dealer));
-                        }
-
-                        juegoPoker.IniciarJuego();
-                        
-                    }
-                    break;
-                case 2: 
-
-
-                try 
+                try
                 {
                     Console.WriteLine("¿Que juego desea jugar?  1) Poker clásico  2) 21 BlackJack");
                     int opcionJuego = int.Parse(Console.ReadLine());
 
                     switch (opcionJuego)
-
                     {
                         case 1:
                             {
@@ -71,9 +35,9 @@ namespace FdS_ProyectoOrdinario
                             {
                                 Console.Clear();
                                 Console.WriteLine("Estas jugando 21 Black Jack :)\n");
-                                
+
                                 Console.WriteLine("Ingrese el numero de Jugadores: ");
-                                int numeroJugadores=int.Parse(Console.ReadLine());
+                                int numeroJugadores = int.Parse(Console.ReadLine());
 
                                 if (numeroJugadores > 7 || numeroJugadores <= 0)
                                 {
@@ -108,7 +72,7 @@ namespace FdS_ProyectoOrdinario
                             }
                     }
                 }
-                catch(Exception ex) 
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                     Console.ReadKey();
