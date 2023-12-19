@@ -10,8 +10,14 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
 {
     internal class CartaPoker : ICarta
     {
-        public FigurasCartasEnum Figura => throw new NotImplementedException();
+        public FigurasCartasEnum Figura { get; }
 
-        public ValoresCartasEnum Valor => throw new NotImplementedException();
+        public ValoresCartasEnum Valor { get; }
+
+        public CartaPoker(FigurasCartasEnum figura, ValoresCartasEnum valor)
+        {
+            Figura = figura;
+            Valor = valor;
+        }
     }
 }

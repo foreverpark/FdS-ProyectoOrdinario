@@ -9,19 +9,31 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
 {
     internal class DealerPoker : IDealer
     {
+        IDeckDeCartas Deck;
+
+        public DealerPoker()
+        {
+            Deck = new DeckDeCartasPoker();
+        }
+
         public void BarajearDeck()
         {
-            throw new NotImplementedException();
+            Deck.BarajearDeck();
         }
 
         public void RecogerCartas(List<ICarta> cartas)
         {
-            throw new NotImplementedException();
+            Deck.MeterCarta(cartas);
         }
 
         public List<ICarta> RepartirCartas(int numeroDeCartas)
         {
-            throw new NotImplementedException();
+            List<ICarta> CartasParaRepartir = new List<ICarta>();
+            for (int i = 0; i < numeroDeCartas; i++)
+            {
+                CartasParaRepartir.Add(Deck.SacarCarta(0));
+            }
+            return CartasParaRepartir;
         }
     }
 }
