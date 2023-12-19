@@ -106,13 +106,13 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
             List<bool> palosIguales = new List<bool>();
             foreach (JugadorPoker jugador in Jugadores)
             {
-                palosIguales.Add(false);
+                palosIguales.Add(true);
                 int primerPalo = (int)jugador.Mano[0].Figura;
                 foreach (ICarta carta in jugador.Mano)
                 {
-                    if ((int)carta.Figura == primerPalo)
+                    if ((int)carta.Figura != primerPalo)
                     {
-                        palosIguales[contador] = true;
+                        palosIguales[contador] = false;
                     }
                 }
 
@@ -171,14 +171,16 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
                 int valorMenor = 14;
                 foreach (ICarta carta in jugador.Mano)
                 {
+                    int numeroCarta = 0;
                     List<int> valoresCartas = new List<int>();
 
                     if (valoresCartas.Contains(valorMenor))
                     {
-                        //Tiene dos valores iguales.
+                        break; //Tiene dos valores iguales.
                     }
                     else
                     {
+                        valoresCartas.Add((int)carta.Valor);
                         if ((int)carta.Valor > valorMayor)
                         {
                             valorMayor = (int)carta.Valor;
@@ -191,7 +193,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
                         cartaMayor[contador] = valorMayor;
 
                         int diferencia = valorMayor - valorMenor;
-                        if (diferencia == 4)
+                        if (numeroCarta == 4 && diferencia == 4)
                         {
                             tieneEscalera[contador] = true;
                             if (palosIguales[contador])
@@ -200,6 +202,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
                             }
                         }
                     }
+                    numeroCarta++;
                 }
 
                 contador++;
@@ -207,15 +210,15 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
 
             contador = 0;
             int escaleraDeColorMayor = -1;
+            int valorEscaleraDeColorMayor = 0;
             foreach (JugadorPoker jugador in Jugadores)
             {
-                int valorMayor = 0;
                 if (tieneEscaleraDeColor[contador])
                 {
-                    if (cartaMayor[contador] > valorMayor)
+                    if (cartaMayor[contador] > valorEscaleraDeColorMayor)
                     {
                         escaleraDeColorMayor = contador;
-                        valorMayor = cartaMayor[contador];
+                        valorEscaleraDeColorMayor = cartaMayor[contador];
                     }
                 }
                 contador++;
@@ -393,7 +396,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
                 tienePar.Add(false);
                 valorTrioOPar.Add(0);
 
-                int[] contadorNumeros = new int[13];
+                int[] contadorNumeros = new int[14];
                 foreach (ICarta carta in jugador.Mano)
                 {
                     contadorNumeros[(int)carta.Valor]++;
@@ -406,10 +409,67 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
                         tieneTrio[contador] = true;
                     }
                 }
-                int numeroMasRepetido = contadorNumeros.Max();
-                valorTrioOPar.Add(numeroMasRepetido);
 
-                tieneDosPares[contador] = contadorNumeros.Count(count => count == 2) == 2;
+                /*Por alguna razón no tenía manera de conseguir el índice
+                 * del valor mayor de la lista, por lo que busqué y encontre
+                 * esta cosa horrorosa. Lo que intenté al principio no
+                 * funcionó. Tengo sueño.
+                 */
+                int numeroMasRepetido = contadorNumeros.Select((value, index) => new { Value = value, Index = index })
+                              .OrderByDescending(item => item.Value)
+                              .First().Index;
+                valorTrioOPar[contador] = numeroMasRepetido;
+
+                tieneDosPares[contador] = contadorNumeros.Count(count => count == 1) == 2;
+                if (tieneDosPares[contador] == false)
+                {
+                    tieneDosPares[contador] = contadorNumeros.Count(count => count == 2) == 2;
+                    if (tieneDosPares[contador] == false)
+                    {
+                        tieneDosPares[contador] = contadorNumeros.Count(count => count == 3) == 2;
+                        if (tieneDosPares[contador] == false)
+                        {
+                            tieneDosPares[contador] = contadorNumeros.Count(count => count == 4) == 2;
+                            if (tieneDosPares[contador] == false)
+                            {
+                                tieneDosPares[contador] = contadorNumeros.Count(count => count == 5) == 2;
+                                if (tieneDosPares[contador] == false)
+                                {
+                                    tieneDosPares[contador] = contadorNumeros.Count(count => count == 6) == 2;
+                                    if (tieneDosPares[contador] == false)
+                                    {
+                                        tieneDosPares[contador] = contadorNumeros.Count(count => count == 7) == 2;
+                                        if (tieneDosPares[contador] == false)
+                                        {
+                                            tieneDosPares[contador] = contadorNumeros.Count(count => count == 8) == 2;
+                                            if (tieneDosPares[contador] == false)
+                                            {
+                                                tieneDosPares[contador] = contadorNumeros.Count(count => count == 9) == 2;
+                                                if (tieneDosPares[contador] == false)
+                                                {
+                                                    tieneDosPares[contador] = contadorNumeros.Count(count => count == 10) == 2;
+                                                    if (tieneDosPares[contador] == false)
+                                                    {
+                                                        tieneDosPares[contador] = contadorNumeros.Count(count => count == 11) == 2;
+                                                        if (tieneDosPares[contador] == false)
+                                                        {
+                                                            tieneDosPares[contador] = contadorNumeros.Count(count => count == 12) == 2;
+                                                            if (tieneDosPares[contador] == false)
+                                                            {
+                                                                tieneDosPares[contador] = contadorNumeros.Count(count => count == 13) == 2;
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 if (tieneDosPares[contador])
                 {
                     List<int> parOrdenados = Enumerable.Range(0, 2).OrderByDescending(numero => contadorNumeros[numero]).ToList();
@@ -448,7 +508,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
             int valorParDobleMayor = 0;
             foreach (bool doblePar in tieneDosPares)
             {
-                if (paresOrdenados != null)
+                if (paresOrdenados[contador] != null)
                 {
                     int sumaPares = paresOrdenados[contador][0] + paresOrdenados[contador][1];
                     if (tieneDosPares[contador])
