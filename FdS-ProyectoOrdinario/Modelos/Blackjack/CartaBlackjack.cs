@@ -18,5 +18,6 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
             Figura = figura;
             Valor = valor;
         }
+
     }
 }

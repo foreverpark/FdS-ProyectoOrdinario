@@ -55,7 +55,6 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
             }
 
             Dealer_Jugador.RealizarJugada();
-            MostrarGanador();
             Console.ReadKey();
             Console.Clear();
 
@@ -63,29 +62,48 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 
         public void MostrarGanador()
         {
-            IJugador ganador = null;
-
-            int puntuacionDeGanador = 0;
+            List<IJugador> JugadoresGanadores = new List<IJugador>();
+            int numeroDeJugadoresEmpatados = 0;
+            int puntuacionDealer = CalcularPuntuacion(Dealer_Jugador.MostrarCartas());
 
             foreach (var jugador in Jugadores)
             {
                 int puntuacionJugador = CalcularPuntuacion(jugador.MostrarCartas());
 
-                if (puntuacionJugador <= 21 && puntuacionJugador > puntuacionDeGanador)
+                if (puntuacionJugador <= 21 && puntuacionDealer > 21)
                 {
-                    ganador = jugador;
-                    puntuacionDeGanador = puntuacionJugador;
+                    JugadoresGanadores.Add(jugador);
+
+                }
+                else if (puntuacionJugador <= 21 && puntuacionJugador > puntuacionDealer && puntuacionDealer <= 21)
+                {
+                    JugadoresGanadores.Add(jugador);
+                }
+
+                if (puntuacionJugador == puntuacionDealer)
+                {
+                    numeroDeJugadoresEmpatados++;
                 }
             }
 
-            int puntuacionDealer = CalcularPuntuacion(Dealer_Jugador.MostrarCartas());
-
-            if (puntuacionDealer <= 21 && puntuacionDealer > puntuacionDeGanador)
+            if (numeroDeJugadoresEmpatados == Jugadores.Count)
             {
-                ganador = null;
+                Console.WriteLine("Hay un empate");
+            }
+            else if (JugadoresGanadores.Count > 0)
+            {
+                Console.WriteLine("Los ganadores son :\n");
+                foreach (var ganador in JugadoresGanadores)
+                {
+                    Console.WriteLine(((JugadorBlackjack)ganador).Nombre);
+                }
+            }
+            else if (JugadoresGanadores.Count == 0)
+            {
+
+                Console.WriteLine("El ganador es el dealer");       
             }
 
-            Console.WriteLine("El ganador es: " + (ganador != null ? ((JugadorBlackjack)ganador).Nombre : "Dealer"));
         }
 
         private int CalcularPuntuacion(List<ICarta> cartas)
