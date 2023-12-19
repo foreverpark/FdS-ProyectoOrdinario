@@ -63,25 +63,34 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
         public void MostrarGanador()
         {
             List<IJugador> JugadoresGanadores = new List<IJugador>();
-
+            int numeroDeJugadoresEmpatados = 0;
             int puntuacionDealer = CalcularPuntuacion(Dealer_Jugador.MostrarCartas());
 
             foreach (var jugador in Jugadores)
             {
                 int puntuacionJugador = CalcularPuntuacion(jugador.MostrarCartas());
 
-                if(puntuacionJugador<=21 && puntuacionDealer > 21) 
+                if (puntuacionJugador <= 21 && puntuacionDealer > 21)
                 {
                     JugadoresGanadores.Add(jugador);
 
                 }
-                else if (puntuacionJugador <= 21 &&puntuacionJugador>puntuacionDealer && puntuacionDealer<=21) 
+                else if (puntuacionJugador <= 21 && puntuacionJugador > puntuacionDealer && puntuacionDealer <= 21)
                 {
-                  JugadoresGanadores.Add(jugador);
+                    JugadoresGanadores.Add(jugador);
+                }
+
+                if (puntuacionJugador == puntuacionDealer)
+                {
+                    numeroDeJugadoresEmpatados++;
                 }
             }
 
-            if(JugadoresGanadores.Count > 0)
+            if (numeroDeJugadoresEmpatados == Jugadores.Count)
+            {
+                Console.WriteLine("Hay un empate");
+            }
+            else if (JugadoresGanadores.Count > 0)
             {
                 Console.WriteLine("Los ganadores son :\n");
                 foreach (var ganador in JugadoresGanadores)
@@ -89,11 +98,12 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
                     Console.WriteLine(((JugadorBlackjack)ganador).Nombre);
                 }
             }
-            else
+            else if (JugadoresGanadores.Count == 0)
             {
 
                 Console.WriteLine("El ganador es el dealer");       
-            }   
+            }
+
         }
 
         private int CalcularPuntuacion(List<ICarta> cartas)
