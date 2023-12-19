@@ -1,5 +1,4 @@
 ﻿using ProyectoOrdinario.Interfaces;
-using System.Collections.Generic;
 
 namespace FdS_ProyectoOrdinario.Modelos.Poker
 {
@@ -85,7 +84,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
         public void MostrarGanador()
         {
             var JugadorGanador = ConseguirGanador();
-            int contador = 0;
+            int contador = 1;
             int ganador = 0;
             foreach (var jugador in Jugadores)
             {
@@ -151,7 +150,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
 
                     if (tieneAs && tieneDiez && tieneJota && tieneReina && tieneRey)
                     {
-                        return jugador;
+                        return Jugadores[contador];
                     }
                 }
                 contador++;
@@ -202,7 +201,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
                         }
                     }
                 }
-                
+
                 contador++;
             }
 
@@ -227,7 +226,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
                 return Jugadores[escaleraDeColorMayor];
             }
 
-            //Four of a kind y Full
+            //Four of a kind o Full
             List<bool> tieneFourOfAKind = new List<bool>();
             List<bool> tieneFull = new List<bool>();
             List<int> valorFourOfAKind = new List<int>();
@@ -361,15 +360,15 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
 
             contador = 0;
             int escaleraMayor = -1;
+            int valorEscaleraMayor = 0;
             foreach (bool escalera in tieneEscalera)
             {
-                int valorMayor = 0;
                 if (tieneEscalera[contador])
                 {
-                    if (cartaMayor[contador] > valorMayor)
+                    if (cartaMayor[contador] > valorEscaleraMayor)
                     {
                         escaleraMayor = contador;
-                        valorMayor = cartaMayor[contador];
+                        valorEscaleraMayor = cartaMayor[contador];
                     }
                 }
                 contador++;
@@ -380,10 +379,133 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
                 return Jugadores[escaleraMayor];
             }
 
+            //Trío, pareja o doble pareja
+            List<bool> tienePar = new List<bool>();
+            List<bool> tieneDosPares = new List<bool>();
+            List<int> valorTrioOPar = new List<int>();
+            List<bool> tieneTrio = new List<bool>();
+            List<List<int>> paresOrdenados = new List<List<int>>();
+            contador = 0;
+            foreach (JugadorPoker jugador in Jugadores)
+            {
+                tieneDosPares.Add(false);
+                tieneTrio.Add(false);
+                tienePar.Add(false);
+                valorTrioOPar.Add(0);
 
-            
+                int[] contadorNumeros = new int[13];
+                foreach (ICarta carta in jugador.Mano)
+                {
+                    contadorNumeros[(int)carta.Valor]++;
+                    if (contadorNumeros[(int)carta.Valor] == 2)
+                    {
+                        tienePar[contador] = true;
+                    }
+                    else if (contadorNumeros[(int)carta.Valor] == 3)
+                    {
+                        tieneTrio[contador] = true;
+                    }
+                }
+                int numeroMasRepetido = contadorNumeros.Max();
+                valorTrioOPar.Add(numeroMasRepetido);
 
-            return null;
+                tieneDosPares[contador] = contadorNumeros.Count(count => count == 2) == 2;
+                if (tieneDosPares[contador])
+                {
+                    List<int> parOrdenados = Enumerable.Range(0, 2).OrderByDescending(numero => contadorNumeros[numero]).ToList();
+                    paresOrdenados.Add(parOrdenados);
+                }
+                else
+                {
+                    paresOrdenados.Add(null);
+                }
+                contador++;
+            }
+
+            contador = 0;
+            int trioMayor = -1;
+            int valorTrioMayor = 0;
+            foreach (bool trio in tieneTrio)
+            {
+                if (tieneTrio[contador])
+                {
+                    if (valorTrioOPar[contador] > valorTrioMayor)
+                    {
+                        trioMayor = contador;
+                        valorTrioMayor = valorTrioOPar[contador];
+                    }
+                }
+                contador++;
+            }
+            if (trioMayor != -1)
+            {
+                return Jugadores[trioMayor];
+            }
+
+
+            contador = 0;
+            int dobleParMayor = -1;
+            int valorParDobleMayor = 0;
+            foreach (bool doblePar in tieneDosPares)
+            {
+                if (paresOrdenados != null)
+                {
+                    int sumaPares = paresOrdenados[contador][0] + paresOrdenados[contador][1];
+                    if (tieneDosPares[contador])
+                    {
+                        if (sumaPares > valorParDobleMayor)
+                        {
+                            valorParDobleMayor = sumaPares;
+                            dobleParMayor = contador;
+                        }
+                    }
+                }
+                contador++;
+            }
+
+            if (dobleParMayor != -1)
+            {
+                return Jugadores[dobleParMayor];
+            }
+
+
+            contador = 0;
+            int parMayor = -1;
+            int valorParMayor = 0;
+            foreach (bool par in tienePar)
+            {
+                if (tienePar[contador])
+                {
+                    if (valorTrioOPar[contador] > valorParMayor)
+                    {
+                        parMayor = contador;
+                        valorParMayor = valorTrioOPar[contador];
+                    }
+                }
+                contador++;
+            }
+            if (parMayor != -1)
+            {
+                return Jugadores[parMayor];
+            }
+
+            contador = 0;
+            int mayorCarta = -1;
+            int valorMayorCarta = 0;
+            foreach(JugadorPoker jugador in Jugadores)
+            {
+                foreach (ICarta carta in jugador.Mano)
+                {
+                    if ((int)carta.Valor > valorMayorCarta)
+                    {
+                        mayorCarta = contador;
+                        valorMayorCarta = (int)carta.Valor;
+                    }
+                }
+                contador++;
+            }
+
+            return Jugadores[mayorCarta];
         }
     }
 }
