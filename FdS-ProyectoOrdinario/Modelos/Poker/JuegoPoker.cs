@@ -190,17 +190,19 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
                             valorMenor = (int)carta.Valor;
                         }
                         cartaMayor[contador] = valorMayor;
+
+                        int diferencia = valorMayor - valorMenor;
+                        if (diferencia == 4)
+                        {
+                            tieneEscalera[contador] = true;
+                            if (palosIguales[contador])
+                            {
+                                tieneEscaleraDeColor[contador] = true;
+                            }
+                        }
                     }
                 }
-                int diferencia = valorMayor - valorMenor;
-                if (diferencia == 4)
-                {
-                    tieneEscalera[contador] = true;
-                    if (palosIguales[contador])
-                    {
-                        tieneEscaleraDeColor[contador] = true;
-                    }
-                }
+                
                 contador++;
             }
 
