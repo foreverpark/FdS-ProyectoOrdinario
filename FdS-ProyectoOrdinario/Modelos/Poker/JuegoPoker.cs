@@ -379,21 +379,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Poker
             }
 
 
-            List<bool> tieneTrio;
-            List<int> valorTrios;
-            List<bool> tienePares;
-            List<int> valorPares;
-            List<bool> tieneDoblePares;
-            List<int> valorDoblePares;
-
-            List<int> masRepetido
-            foreach (JugadorPoker jugador in Jugadores)
-            {
-              foreach(ICarta carta in jugador.Mano)
-                {
-
-                }
-            }
+            
 
             return null;
         }
