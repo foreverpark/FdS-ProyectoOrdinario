@@ -59,33 +59,74 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
 
         public void RealizarJugada()
         {
+
             Console.WriteLine($"\nTurno de {Nombre}\n");
+            if (Nombre == "Dealer")
+            {
+                while (true) {
+
+                 int puntuacion = CalcularPuntuacion();
+                if (puntuacion < 17)
+                {
+                    var nuevaCarta = Dealer.RepartirCartas(1).First();
+                    ObtenerCartas(new List<ICarta> { nuevaCarta });
+                }
+                else if (puntuacion > 21) 
+                {
+
+                        Console.WriteLine($"\nEl dealer supero los 21 \n");
+                        Console.WriteLine("Sus cartas son: \n");
+                        foreach (var carta in ManoDelJugador)
+                        {
+                            Console.Write($"{carta.Valor} de {carta.Figura} \n");
+                        }
+                        break;
+                    }
+
+                else
+                {
+                    Console.WriteLine($"El dealer se planta con {puntuacion}\n");
+                    Console.WriteLine("Sus cartas son: \n");
+                    foreach (var carta in ManoDelJugador)
+                    {
+                        Console.Write($"{carta.Valor} de {carta.Figura} \n");
+                    }
+                        break;
+                }
+                }
+            }
+            else { 
+
             Console.WriteLine("Sus cartas son: ");
             foreach(var carta in ManoDelJugador) 
             {
                 Console.WriteLine($"{carta.Valor} de {carta.Figura}");
             }
-
             Random ramdon = new Random();
-
             while (true)
             {
                 int puntuacion = CalcularPuntuacion();
 
                 if (puntuacion>21) 
                 {
-                    Console.WriteLine("Ya no puede pedir mas cartas llego a 21\n");
+                    Console.WriteLine("El puntuaje supero el 21 ya no puede pedir otra carta\n");
+                    Console.WriteLine($"Su puntaje es de {puntuacion}\n");
                     Console.WriteLine("Sus cartas son: \n");
                     foreach (var carta in ManoDelJugador)
                     {
                         Console.Write($"{carta.Valor} de {carta.Figura} \n");
                     }
+                    
                     break;
                 }
-                int numeroAleatoria=ramdon.Next(1,3);
 
-                if (numeroAleatoria == 1) 
+
+                int probabilidadPedirCarta=Math.Max(0, 18-puntuacion);
+                int descision=ramdon.Next(1,11);
+
+                if (descision<=probabilidadPedirCarta) 
                 {
+                    Console.WriteLine($"\nSu puntaje es de: {puntuacion}\n");
                     Console.WriteLine($"\n{Nombre} decidio pedir otra carta\n");
                     var nuevaCarta = Dealer.RepartirCartas(1).First();
                     ObtenerCartas(new List<ICarta> { nuevaCarta });
@@ -93,7 +134,8 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
                 }
                 else
                 {
-                    Console.WriteLine($"{Nombre} decidio no pedir otra carta\n");
+                    Console.WriteLine($"\n{Nombre} decidio no pedir otra carta\n");
+                    Console.WriteLine($"Su puntaje final es de: {puntuacion}\n");
                     Console.WriteLine("Sus cartas son: \n");
                     foreach (var carta in ManoDelJugador)
                     {
@@ -101,6 +143,7 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
                     }
                     break;
                 }
+            }
             }
 
         }
@@ -114,13 +157,20 @@ namespace FdS_ProyectoOrdinario.Modelos.Blackjack
             foreach(var carta in ManoDelJugador) 
             {
 
-                puntuacion += (int)carta.Valor;
-
-                if(carta.Valor == ValoresCartasEnum.As) 
+                if (carta.Valor == ValoresCartasEnum.As)
                 {
                     NumeroDeAses++;
-                
+                    puntuacion += 11;
                 }
+                else if (carta.Valor >= ValoresCartasEnum.Diez && carta.Valor <= ValoresCartasEnum.Rey)
+                {
+                    puntuacion += 10;
+                }
+                else
+                {
+                    puntuacion += (int)carta.Valor;
+                }
+
             }
 
             while(puntuacion>21 && NumeroDeAses > 0) 
