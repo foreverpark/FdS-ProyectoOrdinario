@@ -2,6 +2,7 @@
 using ProyectoOrdinario.Enumeradores;
 using FdS_ProyectoOrdinario.Modelos.Blackjack;
 using System.ComponentModel;
+using FdS_ProyectoOrdinario.Modelos.Poker;
 
 namespace FdS_ProyectoOrdinario
 {
@@ -25,9 +26,34 @@ namespace FdS_ProyectoOrdinario
                     {
                         case 1:
                             {
-                                Console.Clear();
+                                var juegoPoker = new JuegoPoker();
                                 Console.WriteLine("Estas jugando Poker Clásico :)");
+                                int NumeroJugadores = 0;
+                                Console.WriteLine("Ingrese el numero de Jugadores: ");
+                                while (true)
+                                {
+                                    NumeroJugadores = int.Parse(Console.ReadLine());
+
+                                    //validate number
+                                    if (NumeroJugadores > 0 && NumeroJugadores < 8)
+                                    {
+                                        Console.Clear();
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("\nIngrese un numero mayor que 0 y menor que 8");
+                                    }
+                                }
+
+                                for (int i = 0; i < NumeroJugadores; i++)
+                                {
+                                    juegoPoker.AgregarJugador(new JugadorPoker(new DealerPoker()));
+                                }
+
+                                juegoPoker.IniciarJuego();
                                 falloIntento = false;
+
                                 break;
 
                             }
@@ -79,6 +105,7 @@ namespace FdS_ProyectoOrdinario
                     Console.Clear();
                     falloIntento = true;
                 }
+
             }
         }
     }
