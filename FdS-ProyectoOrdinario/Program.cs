@@ -26,14 +26,14 @@ namespace FdS_ProyectoOrdinario
                             NumeroJugadores = int.Parse(Console.ReadLine());
 
                             //validate number
-                            if (NumeroJugadores > 0 && NumeroJugadores < 8)
+                            if (NumeroJugadores >= 2 && NumeroJugadores <= 9)
                             {
                                 Console.Clear();
                                 break;
                             }
                             else
                             {
-                                Console.WriteLine("\nIngrese un numero mayor que 0 y menor que 8");
+                                Console.WriteLine("\nIngrese un numero entre 2 y 9");
                             }
                         }
 
